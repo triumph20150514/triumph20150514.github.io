@@ -99,8 +99,7 @@
    就尤为重要了，可以让我们更快 
  - 的分析它的绘制流程。一般 测量 布局 绘制（onmearsure onlayout onDraw）.">
 <meta property="og:image" content="http://fromwiz.com/share/resources/490c2346-bb5c-4fa9-9951-0b246fd1bdaa/index_files/View.jpg">
-<meta property="og:image" content="http://note.youdao.com/favicon.ico">
-<meta property="og:updated_time" content="2016-12-15T13:00:51.756Z">
+<meta property="og:updated_time" content="2016-12-15T14:07:51.956Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content=" View 流程之说 ">
 <meta name="twitter:description" content="View运行流程 了解它的自定义流程，绘制过程 - 做Android开发经常会用到各种自定义的控件，首先不论是自己写的还是使用开源
@@ -311,11 +310,10 @@
   比较深入的了解，就连一些归纳总结都很少，这可能就是上学期间养成的不好习惯
   ，然而记忆总是会随着时间而淡忘。
   即便当时你理解了。所以即使总结就显得很重要了。
-
-                                                               &lt;!-- 阅读全文 --&gt;      
-</code></pre><p>下面一个参考图：</p>
+</code></pre> <!-- 阅读全文 -->    
+ <a id="more"></a> 
+<p>下面一个参考图：</p>
 <p><img src="http://fromwiz.com/share/resources/490c2346-bb5c-4fa9-9951-0b246fd1bdaa/index_files/View.jpg" alt="image"></p>
-<p><img src="http://note.youdao.com/favicon.ico" alt="image"></p>
 <p> 从上面的这张图中可以看到Veiw的各个函数调用周期下面来介绍一下每个函数的作用<br> 首先构造函数必须需要实现两个的 ，一般也就需要两个就够了。它的作用两个参数的情况下<br> 代表着在XML文件中写layoutWidth:等属性时会调用两个参数的。三个参数是设置它的主题，<br> 最好实例化一些代码时在每个构造函数中添加init()方法来处理，避免使用This()这种方法，因  为在自定义某些控件是需要实现三个参数的，再用this(conttent,attrs,0)   这样就会把主题覆盖掉。，</p>
 <pre><code> public MyView(Context context) {
     super(context);
