@@ -51,9 +51,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://triumph20150514.github.io/hexo"></form>
@@ -63,6 +63,67 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-View-流程之说" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/12/01/View-流程之说/" class="article-date">
+  <time datetime="2016-12-01T14:35:21.000Z" itemprop="datePublished">2016-12-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/12/01/View-流程之说/"> View 流程之说 </a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="View运行流程-了解它的自定义流程，绘制过程"><a href="#View运行流程-了解它的自定义流程，绘制过程" class="headerlink" title="View运行流程 了解它的自定义流程，绘制过程"></a>View运行流程 了解它的自定义流程，绘制过程</h3> <!-- 阅读全文 -->
+<pre><code> - 做Android开发经常会用到各种自定义的控件，首先不论是自己写的还是使用开源
+  的我们都要了解它的基本实现吧！
+ - 而所有的控件最终还是继承View的所有了解它的绘制流程，各个方法调用的周期
+   就尤为重要了，可以让我们更快 
+ - 的分析它的绘制流程。一般 测量 布局 绘制（onmearsure onlayout onDraw）.
+
+
+1. onmearsure();
+2. onchangsize();
+3. onlayout();
+
+
+- 这里先说它的绘制流程，说实话我对它也还是一知半解，虽然平时会之定义一些简
+ 单的效果一直没有对其中 源码有
+  比较深入的了解，就连一些归纳总结都很少，这可能就是上学期间养成的不好习惯
+  ，然而记忆总是会随着时间而淡忘。
+  即便当时你理解了。所以即使总结就显得很重要了。
+</code></pre>
+        
+          <p class="article-more-link">
+            <a href="/2016/12/01/View-流程之说/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://triumph20150514.github.io/hexo/2016/12/01/View-流程之说/" data-id="cj3wu2om40001kgtjdzplylqn" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/View系列/">View系列</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
   
     <article id="post-The-First-Title" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -99,7 +160,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://triumph20150514.github.io/hexo/2016/11/04/The-First-Title/" data-id="cj3wtweeo0000xstj0fkw4k87" class="article-share-link">Partager</a>
+      <a data-url="https://triumph20150514.github.io/hexo/2016/11/04/The-First-Title/" data-id="cj3wu2omb0002kgtjsw2aiygu" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hexo/">Hexo</a></li></ul>
@@ -121,9 +182,9 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Mot-clés</h3>
+    <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/View系列/">View系列</a></li></ul>
     </div>
   </div>
 
@@ -131,9 +192,9 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a>
+      <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/View系列/" style="font-size: 10px;">View系列</a>
     </div>
   </div>
 
@@ -142,7 +203,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li></ul>
     </div>
   </div>
 
@@ -150,9 +211,13 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Articles récents</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2016/12/01/View-流程之说/"> View 流程之说 </a>
+          </li>
         
           <li>
             <a href="/2016/11/04/The-First-Title/"> The First Title</a>
@@ -171,7 +236,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2017 Trimph<br>
-      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
