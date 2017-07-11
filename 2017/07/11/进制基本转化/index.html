@@ -3,18 +3,23 @@
 <head>
   <meta charset="utf-8">
   
-  <title>View学习过程 | 路的尽头等你可好</title>
+  <title>路的尽头等你可好</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="只希望能够追上你的脚步">
-<meta property="og:type" content="website">
-<meta property="og:title" content="View学习过程">
-<meta property="og:url" content="https://triumph20150514.github.io/hexo/tags/index.html">
+  <meta name="description" content="进制转化 1，计算机只能够识别二进制所有有时我们需要知道进制转换基本规则    二进制32位字节    0000 0000 0000 0000 0000 0000 0000 0000    16进制    0 1 2 3 4 5 6 7 8 9 A B C D E F H
+十进制转二进制   倒序写出余数 01111011">
+<meta property="og:type" content="article">
+<meta property="og:title" content="路的尽头等你可好">
+<meta property="og:url" content="https://triumph20150514.github.io/hexo/2017/07/11/进制基本转化/index.html">
 <meta property="og:site_name" content="路的尽头等你可好">
-<meta property="og:description" content="只希望能够追上你的脚步">
-<meta property="og:updated_time" content="2016-11-07T14:12:29.889Z">
+<meta property="og:description" content="进制转化 1，计算机只能够识别二进制所有有时我们需要知道进制转换基本规则    二进制32位字节    0000 0000 0000 0000 0000 0000 0000 0000    16进制    0 1 2 3 4 5 6 7 8 9 A B C D E F H
+十进制转二进制   倒序写出余数 01111011">
+<meta property="og:image" content="http://note.youdao.com/yws/api/personal/file/806A5C1476C84DDE88EDF5811533699E?method=download&shareKey=ccdf3f071e1a5451c41bc7318837b5e2">
+<meta property="og:updated_time" content="2017-07-11T12:55:58.260Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="View学习过程">
-<meta name="twitter:description" content="只希望能够追上你的脚步">
+<meta name="twitter:title" content="路的尽头等你可好">
+<meta name="twitter:description" content="进制转化 1，计算机只能够识别二进制所有有时我们需要知道进制转换基本规则    二进制32位字节    0000 0000 0000 0000 0000 0000 0000 0000    16进制    0 1 2 3 4 5 6 7 8 9 A B C D E F H
+十进制转二进制   倒序写出余数 01111011">
+<meta name="twitter:image" content="http://note.youdao.com/yws/api/personal/file/806A5C1476C84DDE88EDF5811533699E?method=download&shareKey=ccdf3f071e1a5451c41bc7318837b5e2">
   
     <link rel="alternate" href="/atom.xml" title="路的尽头等你可好" type="application/atom+xml">
   
@@ -63,39 +68,64 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="page-undefined" class="article article-type-page" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-进制基本转化" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/tags/index.html" class="article-date">
-  <time datetime="2016-11-07T14:11:03.000Z" itemprop="datePublished">2016-11-07</time>
+    <a href="/2017/07/11/进制基本转化/" class="article-date">
+  <time datetime="2017-07-11T12:55:16.171Z" itemprop="datePublished">2017-07-11</time>
 </a>
     
   </div>
   <div class="article-inner">
     
     
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      View学习过程
-    </h1>
-  
-
-      </header>
-    
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h3 id="进制转化"><a href="#进制转化" class="headerlink" title="进制转化"></a>进制转化</h3><p> 1，计算机只能够识别二进制所有有时我们需要知道进制转换基本规则<br>    二进制32位字节<br>    0000 0000 0000 0000 0000 0000 0000 0000<br>    16进制<br>    0 1 2 3 4 5 6 7 8 9 A B C D E F H</p>
+<p>十进制转二进制   倒序写出余数 01111011</p>
+<a id="more"></a>
+<p><img src="http://note.youdao.com/yws/api/personal/file/806A5C1476C84DDE88EDF5811533699E?method=download&amp;shareKey=ccdf3f071e1a5451c41bc7318837b5e2" alt="image"></p>
+<p>   2进制转十进制<br>    10010<br>    计算方式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">E = 0*2^0+1*2^1+0*2^2+0*2^3+1*2^4</div></pre></td></tr></table></figure>
+<p>   进制互转可以先转化为二进制然后再转化。</p>
+<h3 id="位运算"><a href="#位运算" class="headerlink" title="位运算"></a>位运算</h3><pre><code>2&gt;&gt;2  右移两位  
+
+2转化为二进制是 10
+补全 0000 0000 0000 0000 0000 0000 0000 0010
+     0000 0000 0000 0000 0000 0000 0000 0000  就是0了
+2&lt;&lt; 2  左移两位      
+      补全 0000 0000 0000 0000 0000 0000 0000 0010
+     0000 0000 0000 0000 0000 0000 0000 1000  转化为 十进制就是 8
+
+还有负数表示法
+
+-5 如何用二进制表示
+  先计算出5的二进制 然后得到它的反码  再接着算它的补码就是-5了 规则如下
+   0000 0000 0000 0000 0000 0000 0000 0101
+   0--&gt;1   1---&gt;0
+   反码 1111 1111 1111 1111 1111 1111 1111 1010
+   补码=反码+1
+        1111 1111 1111 1111 1111 1111 1111 1011
+</code></pre>
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://triumph20150514.github.io/hexo/tags/index.html" data-id="cj4zl10l7000120tj9yyovq5m" class="article-share-link">Share</a>
+      <a data-url="https://triumph20150514.github.io/hexo/2017/07/11/进制基本转化/" data-id="cj4zl10l7000020tj509ank63" class="article-share-link">Share</a>
       
       
     </footer>
   </div>
   
     
+<nav id="article-nav">
+  
+  
+    <a href="/2016/12/01/View-流程之说/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"> View 流程之说 </div>
+    </a>
+  
+</nav>
+
   
 </article>
 
