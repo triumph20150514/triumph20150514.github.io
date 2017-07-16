@@ -5,23 +5,29 @@
   
   <title>路的尽头等你可好</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="HashMap1，hashMap 基本上是现在面试的时候的一个很好的考察点了，通过对平时使用的一些集合检验应试者是否具有刨根问底的态度。
-我们今天就来学习一下他是一个怎么的实现原理。
-HashMap 我们知道它是以键值对的方式来存储数据的，这也使得在很多的地方使用到了它，所有学习它的一些原理性的东西是非常有必要的。">
+  <meta name="description" content="HashMap1，hashMap 基本上是现在面试的时候的一个很好的考察点了，通过对平时使用
+的一些集合检验应试者是否具有刨根问底的态度。我们今天就来学习一下他是
+一个怎么的实现原理。
+HashMap 我们知道它是以键值对的方式来存储数据的，这也使得在很多的地方
+使用到了它，所有学习它的一些原理性的东西是非常有必要的。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="路的尽头等你可好">
 <meta property="og:url" content="https://triumph20150514.github.io/hexo/2017/07/16/HashMap原理分析-api-24/index.html">
 <meta property="og:site_name" content="路的尽头等你可好">
-<meta property="og:description" content="HashMap1，hashMap 基本上是现在面试的时候的一个很好的考察点了，通过对平时使用的一些集合检验应试者是否具有刨根问底的态度。
-我们今天就来学习一下他是一个怎么的实现原理。
-HashMap 我们知道它是以键值对的方式来存储数据的，这也使得在很多的地方使用到了它，所有学习它的一些原理性的东西是非常有必要的。">
+<meta property="og:description" content="HashMap1，hashMap 基本上是现在面试的时候的一个很好的考察点了，通过对平时使用
+的一些集合检验应试者是否具有刨根问底的态度。我们今天就来学习一下他是
+一个怎么的实现原理。
+HashMap 我们知道它是以键值对的方式来存储数据的，这也使得在很多的地方
+使用到了它，所有学习它的一些原理性的东西是非常有必要的。">
 <meta property="og:image" content="http://note.youdao.com/yws/api/personal/file/BD262C5751A04A60B307526F461B4593?method=download&shareKey=347e2e139c98b7b632e142440c99a424">
-<meta property="og:updated_time" content="2017-07-16T10:25:11.029Z">
+<meta property="og:updated_time" content="2017-07-16T10:27:55.184Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="路的尽头等你可好">
-<meta name="twitter:description" content="HashMap1，hashMap 基本上是现在面试的时候的一个很好的考察点了，通过对平时使用的一些集合检验应试者是否具有刨根问底的态度。
-我们今天就来学习一下他是一个怎么的实现原理。
-HashMap 我们知道它是以键值对的方式来存储数据的，这也使得在很多的地方使用到了它，所有学习它的一些原理性的东西是非常有必要的。">
+<meta name="twitter:description" content="HashMap1，hashMap 基本上是现在面试的时候的一个很好的考察点了，通过对平时使用
+的一些集合检验应试者是否具有刨根问底的态度。我们今天就来学习一下他是
+一个怎么的实现原理。
+HashMap 我们知道它是以键值对的方式来存储数据的，这也使得在很多的地方
+使用到了它，所有学习它的一些原理性的东西是非常有必要的。">
 <meta name="twitter:image" content="http://note.youdao.com/yws/api/personal/file/BD262C5751A04A60B307526F461B4593?method=download&shareKey=347e2e139c98b7b632e142440c99a424">
   
     <link rel="alternate" href="/atom.xml" title="路的尽头等你可好" type="application/atom+xml">
@@ -83,9 +89,11 @@ HashMap 我们知道它是以键值对的方式来存储数据的，这也使得
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="HashMap"><a href="#HashMap" class="headerlink" title="HashMap"></a>HashMap</h3><pre><code>1，hashMap 基本上是现在面试的时候的一个很好的考察点了，通过对平时使用的一些集合检验应试者是否具有刨根问底的态度。
-我们今天就来学习一下他是一个怎么的实现原理。
-HashMap 我们知道它是以键值对的方式来存储数据的，这也使得在很多的地方使用到了它，所有学习它的一些原理性的东西是非常有必要的。
+        <h3 id="HashMap"><a href="#HashMap" class="headerlink" title="HashMap"></a>HashMap</h3><pre><code>1，hashMap 基本上是现在面试的时候的一个很好的考察点了，通过对平时使用
+的一些集合检验应试者是否具有刨根问底的态度。我们今天就来学习一下他是
+一个怎么的实现原理。
+HashMap 我们知道它是以键值对的方式来存储数据的，这也使得在很多的地方
+使用到了它，所有学习它的一些原理性的东西是非常有必要的。
 </code></pre><a id="more"></a>
 <pre><code>每次版本升级里面的一些代码都会有所改变  基于api25 基础上研究 他和之前的有些地方的代码改变了 但是实现原理都是一样的
 首先我们来看一个它的存储结构 如下图
@@ -324,7 +332,7 @@ HashMap就了解到这里了。
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://triumph20150514.github.io/hexo/2017/07/16/HashMap原理分析-api-24/" data-id="cj56kscau0001rotj9gmqogqn" class="article-share-link">Share</a>
+      <a data-url="https://triumph20150514.github.io/hexo/2017/07/16/HashMap原理分析-api-24/" data-id="cj56kvs9d0004jotjfghzie1u" class="article-share-link">Share</a>
       
       
     </footer>
