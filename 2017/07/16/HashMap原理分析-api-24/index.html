@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>路的尽头等你可好</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="HashMap1，hashMap 基本上是现在面试的时候的一个很好的考察点了，通过对平时使用的一些集合检验应试者是否具有刨根问底的态度。
+我们今天就来学习一下他是一个怎么的实现原理。
+HashMap 我们知道它是以键值对的方式来存储数据的，这也使得在很多的地方使用到了它，所有学习它的一些原理性的东西是非常有必要的。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="路的尽头等你可好">
+<meta property="og:url" content="https://triumph20150514.github.io/hexo/2017/07/16/HashMap原理分析-api-24/index.html">
+<meta property="og:site_name" content="路的尽头等你可好">
+<meta property="og:description" content="HashMap1，hashMap 基本上是现在面试的时候的一个很好的考察点了，通过对平时使用的一些集合检验应试者是否具有刨根问底的态度。
+我们今天就来学习一下他是一个怎么的实现原理。
+HashMap 我们知道它是以键值对的方式来存储数据的，这也使得在很多的地方使用到了它，所有学习它的一些原理性的东西是非常有必要的。">
+<meta property="og:image" content="http://note.youdao.com/yws/api/personal/file/BD262C5751A04A60B307526F461B4593?method=download&shareKey=347e2e139c98b7b632e142440c99a424">
+<meta property="og:updated_time" content="2017-07-16T10:25:11.029Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="路的尽头等你可好">
+<meta name="twitter:description" content="HashMap1，hashMap 基本上是现在面试的时候的一个很好的考察点了，通过对平时使用的一些集合检验应试者是否具有刨根问底的态度。
+我们今天就来学习一下他是一个怎么的实现原理。
+HashMap 我们知道它是以键值对的方式来存储数据的，这也使得在很多的地方使用到了它，所有学习它的一些原理性的东西是非常有必要的。">
+<meta name="twitter:image" content="http://note.youdao.com/yws/api/personal/file/BD262C5751A04A60B307526F461B4593?method=download&shareKey=347e2e139c98b7b632e142440c99a424">
+  
+    <link rel="alternate" href="/atom.xml" title="路的尽头等你可好" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">路的尽头等你可好</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://triumph20150514.github.io/hexo"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-HashMap原理分析-api-24" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/07/16/HashMap原理分析-api-24/" class="article-date">
+  <time datetime="2017-07-16T10:23:45.619Z" itemprop="datePublished">2017-07-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="HashMap"><a href="#HashMap" class="headerlink" title="HashMap"></a>HashMap</h3><pre><code>1，hashMap 基本上是现在面试的时候的一个很好的考察点了，通过对平时使用的一些集合检验应试者是否具有刨根问底的态度。
+我们今天就来学习一下他是一个怎么的实现原理。
+HashMap 我们知道它是以键值对的方式来存储数据的，这也使得在很多的地方使用到了它，所有学习它的一些原理性的东西是非常有必要的。
+</code></pre><a id="more"></a>
+<pre><code>每次版本升级里面的一些代码都会有所改变  基于api25 基础上研究 他和之前的有些地方的代码改变了 但是实现原理都是一样的
+首先我们来看一个它的存储结构 如下图
+
+先来看下这个类
+</code></pre><p>   /<em>* @hide </em>/  // Android added.<br>    static class HashMapEntry<k,v> implements Map.Entry<k,v> {<br>        final K key;<br>        V value;<br>        HashMapEntry<k,v> next;<br>        int hash;<br>    这是它里面的属性</k,v></k,v></k,v></p>
+<p><img src="http://note.youdao.com/yws/api/personal/file/BD262C5751A04A60B307526F461B4593?method=download&amp;shareKey=347e2e139c98b7b632e142440c99a424" alt="image"></p>
+<pre><code>首先我们来看看它都低可以存储什么格式的数据。
+HashMap（K,V）
+
+key值 可为null object “” 空字符
+Value  可为null object  “” 空字符
+相同key值 新Value会替换旧Value
+
+最小容量
+static final int DEFAULT_INITIAL_CAPACITY = 4;
+
+最大容量
+static final int MAXIMUM_CAPACITY = 1 &lt;&lt; 30;
+
+/**
+ *加载因子
+ * The load factor used when none specified in constructor.
+ */
+
+static final float DEFAULT_LOAD_FACTOR = 0.75f;
+
+下面我们来看看它的默认构找函数 初始化容量  加载因子
+ public HashMap(int initialCapacity, float loadFactor) {
+    if (initialCapacity &lt; 0)
+        throw new IllegalArgumentException(&quot;Illegal initial capacity: &quot; +
+                                           initialCapacity);
+    if (initialCapacity &gt; MAXIMUM_CAPACITY) {
+        initialCapacity = MAXIMUM_CAPACITY;  最大值
+    } else if (initialCapacity &lt; DEFAULT_INITIAL_CAPACITY) {
+        initialCapacity = DEFAULT_INITIAL_CAPACITY;  最小值
+    }
+
+    if (loadFactor &lt;= 0 || Float.isNaN(loadFactor))
+        throw new IllegalArgumentException(&quot;Illegal load factor: &quot; +
+                                           loadFactor);
+    // Android-Note: We always use the default load factor of 0.75f.
+
+    // This might appear wrong but it&apos;s just awkward design. We always call
+    // inflateTable() when table == EMPTY_TABLE. That method will take &quot;threshold&quot;
+    // to mean &quot;capacity&quot; and then replace it with the real threshold (i.e, multiplied with
+    // the load factor).
+    threshold = initialCapacity;  // 把初始容量 赋值给 限量值  后面会在 inflateTable();
+    init();
+}
+
+上面我了解它的一些初始化参数，下面我们继续了解它是如何存储数据的
+
+
+/**
+ * The table, resized as necessary. Length MUST Always be a power of two.
+ */
+transient HashMapEntry&lt;K,V&gt;[] table = (HashMapEntry&lt;K,V&gt;[]) EMPTY_TABLE;
+这里给table赋值  EMPTY_TABLE为空。
+
+
+ 下面看存储方法
+
+  public V put(K key, V value) {
+    if (table == EMPTY_TABLE) {
+        inflateTable(threshold); 第一次会走这里
+    }
+    if (key == null)
+        return putForNullKey(value);
+    int hash = sun.misc.Hashing.singleWordWangJenkinsHash(key);
+    int i = indexFor(hash, table.length);
+    for (HashMapEntry&lt;K,V&gt; e = table[i]; e != null; e = e.next) {
+        Object k;
+        if (e.hash == hash &amp;&amp; ((k = e.key) == key || key.equals(k))) {
+            V oldValue = e.value;
+            e.value = value;
+            e.recordAccess(this);
+            return oldValue;
+        }
+    }
+
+     modCount++;
+     addEntry(hash, key, value, i);
+     return null;
+}
+
+
+下面我们看看inflateTable（）方面做了哪些事情
+
+  private void inflateTable(int toSize) {
+    // Find a power of 2 &gt;= toSize
+    int capacity = roundUpToPowerOf2(toSize);
+
+    // Android-changed: Replace usage of Math.min() here because this method is
+    // called from the &lt;clinit&gt; of runtime, at which point the native libraries
+    // needed by Float.* might not be loaded.
+
+   float thresholdFloat = capacity * loadFactor; 通过加载因子计算出 限制值
+
+    if (thresholdFloat &gt; MAXIMUM_CAPACITY + 1) {
+        thresholdFloat = MAXIMUM_CAPACITY + 1;
+    }
+
+    threshold = (int) thresholdFloat; 这里重新赋值
+    table = new HashMapEntry[capacity];  初始化table大小
+}
+
+
+代码不是很多，我们来看roundUpToPowerOf2()这个方法 它是返回一个大于当前值的最小2的n次方，比如 输入5 返回8  2^3
+里面的具体实现方法有兴趣的可以自己看看，我没弄懂为什么要那样计算（右移 1 2 4 8 16），求大神解惑。
+这里是第一次执行的时候会走到这里来。以后table 不为空就不会走到这里了
+
+下面我们接着向下走 判断key值是否为空，key为空的情况下进入putForNullKey（）方法
+通过for 循环 table[0] 第一个数组中查找 为什么table 会把下标写死 从createEntry（）方法可以找到答案（最后一个参数）
+如果已经存在key值为空的 Entry 我们可以看到下面for循环体找到 解答 把新Value 替换旧Value 最后返回旧Value 不知道为啥
+会把 旧Value值返回
+  如果不存在的话 就需要从新创建一个HashMapEntry 然后添加到数据中 通过 addEntry()  createEntry()可以找到答案
+  private V putForNullKey(V value) {
+    for (HashMapEntry&lt;K,V&gt; e = table[0]; e != null; e = e.next) {
+        if (e.key == null) {
+            V oldValue = e.value;
+            e.value = value;
+            e.recordAccess(this);
+            return oldValue;
+        }
+    }
+    modCount++;
+    addEntry(0, null, value, 0);  hash值为0  最后一个参数是table 下标
+    return null;
+}
+
+
+void addEntry(int hash, K key, V value, int bucketIndex) {
+    if ((size &gt;= threshold) &amp;&amp; (null != table[bucketIndex])) {
+        resize(2 * table.length);
+        hash = (null != key) ? sun.misc.Hashing.singleWordWangJenkinsHash(key) : 0;
+        bucketIndex = indexFor(hash, table.length);
+    }
+
+    createEntry(hash, key, value, bucketIndex); 
+}
+
+
+void createEntry(int hash, K key, V value, int bucketIndex) {
+    HashMapEntry&lt;K,V&gt; e = table[bucketIndex];
+    table[bucketIndex] = new HashMapEntry&lt;&gt;(hash, key, value, e);  //z这里可以找到加载数组的首位
+    size++;
+}
+
+
+上面我们了解了添加一个key值为null的存储过程，我们再接着向后面看。
+key值不为空的情况。 首先得到它的Hash值，然后再和 数组的大小-1 做异或。
+这样得到的值就永远在0-2^n 之间。HashMap的容量一定是2的N次方。
+2的N次方 用二进制表示 就是一个 1后面接的全是0 而它减1 后就是 1和它前面的全为0，而1后面的全为1 
+再与一个数 位与运算那么那就永远小于那个 2的N次方 不会数组越界了
+举个例子这样更容易理解。 hash &amp; length-1   
+如： 14 &amp; 7   位与运算  只有同时等于1才为1 否则为0 
+    0000 0000 0000 1110
+    0000 0000 0000 0111
+ --&gt;0000 0000 0000 0110  --&gt; 6 它就是数据下标 它永远也不可能大于7 最大就是等于7 不会照成数组越界
+                               因为在length 的二进制始终比 length-1 大于一，也就是这个最高为导致了
+                               在和hash 位于运算时 永远不会超过length-1 ,有点啰嗦啦！
+static int indexFor(int h, int length) {
+    // assert Integer.bitCount(length) == 1 : &quot;length must be a non-zero power of 2&quot;;
+    return h &amp; (length-1);
+}
+
+这里我们分析了如何计算下标的
+然后我们进入89行的for循环体中查找这个下标 位置是否存在HashMapEntry
+存在的话我们判断它的key值是否相同 hash值是否相同 如果懂相同相同他们的key值相同 就要替换掉旧的Value了
+
+如何不相同我们就会走到下面的addEntry() 方法中
+
+我们可以看到它会把旧的HashMapEntry值添加到新的 HashMapEntry next 中  205 206行
+旧值 table[bucketIndex] 保存在e中
+206  重新给table[bucketIndex] 赋值 在构找函数中 把 e加载了next中。 这就是HashMap中链表 
+
+void addEntry(int hash, K key, V value, int bucketIndex) {
+    if ((size &gt;= threshold) &amp;&amp; (null != table[bucketIndex])) {
+        resize(2 * table.length);
+        hash = (null != key) ? sun.misc.Hashing.singleWordWangJenkinsHash(key) : 0;
+        bucketIndex = indexFor(hash, table.length);
+    }
+
+    createEntry(hash, key, value, bucketIndex); 
+}
+
+
+void createEntry(int hash, K key, V value, int bucketIndex) {
+    HashMapEntry&lt;K,V&gt; e = table[bucketIndex];
+    table[bucketIndex] = new HashMapEntry&lt;&gt;(hash, key, value, e);
+    size++;
+}
+
+可以看到我们每次添加HashMapEntry 是都会走 196 判断 当前size 是否大于 阈值（threshold） 
+size 数组大小 每次在createEntry() 中执行都会++。 如果它大于等于阈值了 就要扩容
+
+可以看resize() 方法 addEntry中传入的是当前数组大小的两倍。
+
+
+ void resize(int newCapacity) {
+    HashMapEntry[] oldTable = table;
+    int oldCapacity = oldTable.length;
+    if (oldCapacity == MAXIMUM_CAPACITY) {
+        threshold = Integer.MAX_VALUE;
+        return;
+    }
+
+    HashMapEntry[] newTable = new HashMapEntry[newCapacity]; 
+    transfer(newTable); 把所有的数据扩展到新数组中
+    table = newTable; 
+    threshold = (int)Math.min(newCapacity * loadFactor, MAXIMUM_CAPACITY + 1); 每次扩容后就要从新设置阈值
+}
+
+
+
+/**
+ * Transfers all entries from current table to newTable.
+ */
+void transfer(HashMapEntry[] newTable) {
+    int newCapacity = newTable.length;
+    for (HashMapEntry&lt;K,V&gt; e : table) {
+        while(null != e) {
+            HashMapEntry&lt;K,V&gt; next = e.next; 把旧的保存
+            int i = indexFor(e.hash, newCapacity);
+            e.next = newTable[i]; 新的赋值在 
+            newTable[i] = e;
+            e = next;  如何next部位空会 继续循环
+        }
+    }
+}
+
+
+HashMap就了解到这里了。
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://triumph20150514.github.io/hexo/2017/07/16/HashMap原理分析-api-24/" data-id="cj56kscau0001rotj9gmqogqn" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/07/11/进制基本转化/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/View系列/">View系列</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/View系列/" style="font-size: 10px;">View系列</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/07/16/HashMap原理分析-api-24/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/11/进制基本转化/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2016/12/01/View-流程之说/"> View 流程之说 </a>
+          </li>
+        
+          <li>
+            <a href="/2016/11/04/The-First-Title/"> The First Title</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Trimph<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
